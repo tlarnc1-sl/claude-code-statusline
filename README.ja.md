@@ -25,15 +25,31 @@ cache 91%  $0.42 3m5s  today ~$5.02 (2 sessions)
 ## インストール
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/install.sh | bash
+```
+
+これだけで、`statusline.py` と `setup_statusline.py` を `~/.claude` にダウンロードし、`~/.claude/settings.json` の `statusLine` をこのスクリプトに向け、設定ウィザードを開くための `ccstatus` というシェルエイリアス(zsh/bash)を追加し、その場でウィザードを1回実行して初期設定まで済ませます。
+
+あとで設定を変えたくなったら、新しいターミナルを開いて次のコマンドを打つだけです。
+
+```bash
+ccstatus
+```
+
+これは `python3 ~/.claude/setup_statusline.py` のショートカットです。直接そちらを実行しても構いません。
+
+### 手動インストール
+
+自分で手を動かしたい場合や、ワンライナーが好みでない場合はこちら。
+
+```bash
 curl -o ~/.claude/statusline.py https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/statusline.py
 curl -o ~/.claude/setup_statusline.py https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/setup_statusline.py
 chmod +x ~/.claude/statusline.py ~/.claude/setup_statusline.py
 python3 ~/.claude/setup_statusline.py
 ```
 
-セットアップスクリプトが `~/.claude/statusline_config.json` を作成し、`~/.claude/settings.json` の `statusLine` をこのスクリプトに向けます。設定を変えたくなったら、いつでも再実行してください。
-
-手動で設定したい場合は、`statusline_config.example.json` を `~/.claude/statusline_config.json` としてコピーして編集し、`~/.claude/settings.json` に以下を追加してください。
+ウィザードを使わず手動で設定したい場合は、`statusline_config.example.json` を `~/.claude/statusline_config.json` としてコピーして編集し、`~/.claude/settings.json` に以下を追加してください。
 
 ```json
 {

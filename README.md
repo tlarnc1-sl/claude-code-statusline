@@ -25,15 +25,31 @@ Every section, bar width, path depth, and color threshold is configurable — se
 ## Install
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/install.sh | bash
+```
+
+This downloads `statusline.py` and `setup_statusline.py` into `~/.claude`, points `~/.claude/settings.json`'s `statusLine` at the script, adds a `ccstatus` shell alias (zsh/bash) for the settings wizard, and runs that wizard once so you can pick your options right away.
+
+Whenever you want to change your settings later, open a new terminal and run:
+
+```bash
+ccstatus
+```
+
+That's just a shortcut for `python3 ~/.claude/setup_statusline.py`, which you can also run directly.
+
+### Manual install
+
+Prefer to do it yourself, or the one-liner isn't your style:
+
+```bash
 curl -o ~/.claude/statusline.py https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/statusline.py
 curl -o ~/.claude/setup_statusline.py https://raw.githubusercontent.com/tlarnc1-sl/claude-code-statusline/main/setup_statusline.py
 chmod +x ~/.claude/statusline.py ~/.claude/setup_statusline.py
 python3 ~/.claude/setup_statusline.py
 ```
 
-The setup script writes `~/.claude/statusline_config.json` and points `~/.claude/settings.json`'s `statusLine` at the script. Re-run it any time to change your settings.
-
-To configure by hand instead, copy `statusline_config.example.json` to `~/.claude/statusline_config.json` and edit it, then add to `~/.claude/settings.json`:
+To configure by hand instead of using the wizard, copy `statusline_config.example.json` to `~/.claude/statusline_config.json` and edit it, then add to `~/.claude/settings.json`:
 
 ```json
 {
