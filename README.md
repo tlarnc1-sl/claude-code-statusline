@@ -1,5 +1,7 @@
 # claude-code-statusline
 
+English | [日本語](README.ja.md)
+
 A configurable, three-line status line for [Claude Code](https://www.claude.com/product/claude-code) with usage-limit tracking, context window usage, prompt-cache hit rate, and cost estimates — using only fields Claude Code officially provides on stdin (no scraping, no undocumented API calls).
 
 ```
