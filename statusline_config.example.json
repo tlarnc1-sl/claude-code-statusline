@@ -1,0 +1,14 @@
+{
+  "show_git": true,
+  "show_ahead_behind": true,
+  "show_context": true,
+  "show_rate_limits": true,
+  "show_cache": true,
+  "show_cost": true,
+  "show_today_total": true,
+  "cwd_max_parts": 2,
+  "bar_width": 10,
+  "warn_threshold": 50,
+  "danger_threshold": 80,
+  "today_cache_ttl": 60
+}
