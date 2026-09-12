@@ -22,8 +22,14 @@ import time
 from pathlib import Path
 
 RESET = "\033[0m"
-FILLED = "█"
-EMPTY = "░"
+BAR_OPEN = "▕"
+BAR_CLOSE = "❙"  # distinct from the eighth-block fill glyphs below, so a
+                 # 1/8-filled boundary cell never looks identical to the bracket
+FULL_BLOCK = "█"
+# Eighth-block characters, indexed by how many eighths are filled (0-7).
+# Index 0 is a blank cell; index 8 would be FULL_BLOCK, handled separately.
+EIGHTHS = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉"]
+EMPTY_TRACK = "░"  # dim fill for the unused part of a bar
 
 CONFIG_FILE = Path.home() / ".claude" / "statusline_config.json"
 
@@ -80,11 +86,24 @@ def threshold_color(pct: float, config: dict) -> str:
 
 
 def make_bar(pct: float, config: dict) -> str:
+    """Sub-character precision bar: the boundary cell is filled with an
+    eighth-block character, so the bar's length tracks the real
+    percentage instead of rounding to whole cells. The unused portion is
+    drawn with a dim track character so the bar's full extent stays
+    visible instead of trailing off into blank space."""
     width = config["bar_width"]
     pct = max(0.0, min(100.0, pct))
-    filled = round(pct / 100 * width)
-    bar = FILLED * filled + EMPTY * (width - filled)
-    return color(threshold_color(pct, config), f"[{bar}]")
+    total_eighths = round(pct / 100 * width * 8)
+    total_eighths = max(0, min(width * 8, total_eighths))
+    full_cells, remainder = divmod(total_eighths, 8)
+    filled = FULL_BLOCK * full_cells
+    if remainder:
+        filled += EIGHTHS[remainder]
+        full_cells += 1
+    track = EMPTY_TRACK * (width - full_cells)
+    filled_colored = color(threshold_color(pct, config), filled)
+    track_colored = color("90", track)
+    return f"{BAR_OPEN}{filled_colored}{track_colored}{BAR_CLOSE}"
 
 
 def format_k(n: float) -> str:
